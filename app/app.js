@@ -369,7 +369,7 @@
             <td>${new Date(l.created_at).toLocaleString('he-IL', { timeZone: TZ, day: 'numeric', month: 'numeric', hour: '2-digit', minute: '2-digit' })}</td>
             <td>${esc(REMINDER_LABEL[l.kind]?.split(' (')[0] || (l.kind === 'test' ? 'בדיקה' : l.kind))}</td>
             <td>${esc(l.name || l.phone)}</td>
-            <td title="${esc(l.response || '')}">${l.status_code == null ? (s.greenapi_instance ? '…' : 'לא נשלח') : l.status_code === 200 ? '✓' : '✗ ' + l.status_code}</td>
+            <td title="${esc(l.response || '')}">${l.status_code == null ? (s.greenapi_instance ? '…' : 'לא נשלח') : l.status_code === 200 ? '✓' : l.status_code === 466 ? '✗ נגמרה המכסה ב-Green API' : '✗ ' + l.status_code}</td>
           </tr>`).join('')}</tbody></table></div>` : '<p class="muted">עוד לא נשלחו הודעות.</p>'}
         <div class="export"><button class="btn ghost small" data-act="reload-admin">רענון</button></div>
       </div>`
