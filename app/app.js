@@ -404,8 +404,14 @@
     render()
   }
 
+  const siteUrl = () => location.origin + location.pathname
+
   async function loadAdmin() {
     state.admin = await rpc('app_admin', { p_token: state.token })
+    // The links in WhatsApp messages are built from this address, so fill it in on first visit.
+    if (!state.admin.settings?.app_url) {
+      state.admin = await rpc('app_admin_save_settings', { p_token: state.token, p_values: { app_url: siteUrl() } })
+    }
     render()
   }
 
@@ -509,10 +515,11 @@
       'end-no-start': () => { state.mode = 'end-no-start'; render() },
       cancel: () => { state.mode = null; render() },
       csv,
-      'use-url': () => { document.getElementById('s-app_url').value = location.origin + location.pathname },
+      'use-url': () => { document.getElementById('s-app_url').value = siteUrl() },
       'save-settings': () => run(async () => {
         const values = {}
         ;['app_url', 'greenapi_url', 'greenapi_instance', 'greenapi_token'].forEach((k) => (values[k] = val('s-' + k)))
+        if (!values.app_url.trim()) values.app_url = siteUrl()
         values.work_days = [...document.querySelectorAll('[data-wd]')].filter((c) => c.checked).map((c) => c.dataset.wd).join(',')
         state.admin = await rpc('app_admin_save_settings', { p_token: state.token, p_values: values })
         toast('ההגדרות נשמרו'); render()
