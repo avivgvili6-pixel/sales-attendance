@@ -200,7 +200,7 @@
       ${started && w.followups_planned != null
         ? `<p class="muted small" style="margin:-6px 0 12px">בבוקר תכננת ${num(w.followups_planned)} פולואפים</p>` : ''}
       <div class="field">
-        <label for="f-calls">כמה שיחות ביצעת?<span class="hint">לא חובה</span></label>
+        <label for="f-calls">כמה שיחות ביצעת?</label>
         <input id="f-calls" class="num-in" type="number" inputmode="numeric" min="0" value="${w?.calls ?? ''}" placeholder="—" />
       </div>
       <h3>סגירות</h3>
@@ -212,7 +212,7 @@
           <input id="f-revenue" class="num-in" type="number" inputmode="decimal" min="0" step="any" value="${w?.revenue ?? ''}" placeholder="0" />
         </div>
       </div>
-      <h3>הערה <span class="muted small">(לא חובה)</span></h3>
+      <h3>הערה</h3>
       <textarea id="f-note" placeholder="משהו שכדאי לדעת על היום?">${esc(w?.note ?? '')}</textarea>
       <button class="btn" data-act="check-out">${editing ? 'שמירה' : '■ סיימתי'}</button>
       ${editing || state.mode === 'end-no-start'
